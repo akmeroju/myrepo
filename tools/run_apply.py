@@ -19,14 +19,14 @@ def main() -> int:
             "Do NOT run apply_*.py — edit these files instead:\n"
             "  assets/portfolio.css   (styles)\n"
             "  assets/portfolio.js    (logic)\n"
-            "  index.html (HTML structure only)\n\n"
+            "  adithya-portfolio.html (HTML structure only)\n\n"
             "After edits: python3 tools/portfolio_guard.py validate",
             file=sys.stderr,
         )
         return 1
 
     scripts = sys.argv[1:] or ["apply_updates.py", "apply_polish.py", "apply_fixes.py"]
-    backup_file(ROOT / "index.html", label="pre-apply-batch")
+    backup_file(ROOT / "adithya-portfolio.html", label="pre-apply-batch")
 
     for script in scripts:
         path = ROOT / script

@@ -12,7 +12,7 @@ from portfolio_guard import is_external_mode  # noqa: E402
 if is_external_mode():
     sys.exit("BLOCKED: Portfolio is split. Edit assets/portfolio.css / portfolio.js instead.")
 
-HTML = ROOT / "index.html"
+HTML = ROOT / "adithya-portfolio.html"
 RESUME = "https://drive.google.com/file/d/1DKPi8jJ2Ji4PxIV6TdTWAtyXx9faUarY/view?usp=drivesdk"
 
 NEW_CSS = r"""
