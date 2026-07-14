@@ -22,6 +22,7 @@ Award / hackathon photos for the Recognition section carousel.
 Project card thumbnails for the portfolio **Case Studies** grid.
 
 - `acko-website-design.png` — ACKO Website Design card (`wca`)
+- `adsc-thumbnail.png` — ACKO Drive Service Centre card (`wcb`)
 
 ## case-studies/
 ACKO case study assets — see `case-studies/README.md`.

@@ -334,7 +334,18 @@ nav.solid{
 .wca .ctitle{color:#111;margin-bottom:2px}
 .wca .ctag{color:#666;margin-bottom:4px}
 .wca .csubtitle{color:rgba(17,17,17,0.72)}
-.wcb .cbg{background:linear-gradient(145deg,#e4f0e8,#c8dcd0)}
+.wcb .cbg{background:#12061f;position:relative;align-items:flex-end;padding:0;overflow:hidden}
+.wcb .wcard-thumb{
+  position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:center center;
+}
+.wcb .cbg-inner{
+  position:relative;z-index:2;width:100%;
+  padding:24px;padding-top:48px;
+  background:linear-gradient(to top,rgba(18,6,31,0.94) 0%,rgba(18,6,31,0.35) 42%,transparent 100%);
+}
+.wcb .ctag,.wcb .ctitle{display:none}
+.wcb .csubtitle{color:rgba(255,255,255,0.78)}
 .wcc .cbg{background:linear-gradient(145deg,#f2ede8,#e0d2c8)}
 .wcd .cbg{background:#f0c9a8;position:relative;align-items:flex-end;padding:0;overflow:hidden}
 .wcd .wcard-thumb{

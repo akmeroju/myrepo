@@ -72,6 +72,14 @@
       transition:transform 0.35s cubic-bezier(0.22,1,0.36,1),box-shadow 0.35s ease;
     }
     .proj-card:hover{transform:translateY(-6px);box-shadow:0 20px 48px rgba(0,0,0,0.1)}
+    .proj-card.coming-soon{cursor:default;opacity:0.78}
+    .proj-card.coming-soon:hover{transform:none;box-shadow:none}
+    .proj-card.coming-soon .proj-arrow{display:none}
+    .coming-soon-badge{
+      position:absolute;top:20px;right:20px;
+      font-size:0.55rem;font-weight:700;letter-spacing:0.18em;text-transform:uppercase;
+      background:var(--dark);color:#fff;padding:6px 12px;z-index:2;
+    }
     .proj-thumb{
       aspect-ratio:4/3;
       display:flex;align-items:flex-end;
@@ -79,12 +87,23 @@
       position:relative;
       overflow:hidden;
     }
+    .proj-thumb img{
+      position:absolute;inset:0;width:100%;height:100%;
+      object-fit:cover;object-position:center;
+    }
+    .proj-thumb.has-img{background:#12061f}
+    .proj-thumb.has-img .proj-card-tag{
+      position:relative;z-index:2;
+      color:rgba(255,255,255,0.85);background:rgba(0,0,0,0.45);
+    }
+    .proj-thumb.has-img .proj-arrow{z-index:2}
     .proj-card:nth-child(1) .proj-thumb{background:linear-gradient(145deg,#e8f0e8,#c8dcc0)}
     .proj-card:nth-child(2) .proj-thumb{background:linear-gradient(145deg,#f0e8e8,#dcc0c0)}
     .proj-card:nth-child(3) .proj-thumb{background:linear-gradient(145deg,#e8e8f5,#c8c8e0)}
     .proj-card:nth-child(4) .proj-thumb{background:linear-gradient(145deg,#fdf3e8,#f5dfc0)}
     .proj-card:nth-child(5) .proj-thumb{background:linear-gradient(145deg,#e8f0f5,#c0d4e0)}
     .proj-card:nth-child(6) .proj-thumb{background:linear-gradient(145deg,#f5f0e8,#e0d0b8)}
+    .proj-card:nth-child(7) .proj-thumb{background:linear-gradient(145deg,#eef5f0,#c8e0d4)}
     .proj-card-tag{
       font-size:0.56rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;
       color:rgba(0,0,0,0.5);background:rgba(255,255,255,0.8);
@@ -107,6 +126,20 @@
     /* WIP card */
     .proj-card.wip{opacity:0.5;pointer-events:none}
     .wip-label{position:absolute;top:12px;right:12px;font-size:0.55rem;font-weight:700;letter-spacing:0.2em;background:rgba(0,0,0,0.1);padding:4px 8px;text-transform:uppercase}
+
+    /* NDA modal */
+    .nda-modal{position:fixed;inset:0;z-index:1000;display:flex;align-items:center;justify-content:center;padding:24px;opacity:0;visibility:hidden;transition:opacity 0.25s ease,visibility 0.25s ease}
+    .nda-modal.is-open{opacity:1;visibility:visible}
+    .nda-modal-backdrop{position:absolute;inset:0;background:rgba(0,0,0,0.55)}
+    .nda-modal-panel{position:relative;background:#fff;max-width:440px;width:100%;padding:40px 36px 36px;border:1px solid var(--border)}
+    .nda-modal-close{position:absolute;top:14px;right:16px;border:none;background:none;font-size:1.5rem;line-height:1;cursor:pointer;color:#666}
+    .nda-modal-eyebrow{font-size:0.58rem;font-weight:700;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+    .nda-modal-panel h3{font-size:1.6rem;font-weight:800;margin-bottom:14px}
+    .nda-modal-body{font-size:0.82rem;font-weight:300;color:#555;line-height:1.75;margin-bottom:24px}
+    .nda-modal-actions{display:flex;flex-wrap:wrap;gap:10px}
+    .nda-modal-actions a{font-size:0.72rem;font-weight:700;letter-spacing:0.04em;text-decoration:none;padding:10px 18px}
+    .nda-btn-dark{background:var(--dark);color:#fff}
+    .nda-btn-outline{border:1px solid var(--border);color:var(--text)}
 
     /* Filter bar */
     .filter-bar{display:flex;gap:8px;flex-wrap:wrap}
@@ -144,6 +177,7 @@
     [data-a].in{opacity:1;transform:none}
     [data-d="1"]{transition-delay:0.08s}[data-d="2"]{transition-delay:0.16s}[data-d="3"]{transition-delay:0.24s}
     [data-d="4"]{transition-delay:0.32s}[data-d="5"]{transition-delay:0.4s}[data-d="6"]{transition-delay:0.48s}
+    [data-d="7"]{transition-delay:0.56s}
 
     @media(max-width:900px){nav{padding:0 24px}.nav-links{display:none}}
     @media(max-width:768px){.page-hero{padding:120px 24px 60px}.projects-section{padding:60px 24px 80px}.projects-grid{grid-template-columns:1fr 1fr}.proj-info{padding:20px}}
@@ -195,7 +229,8 @@
   <div class="projects-grid" id="proj-grid">
 
     <a class="proj-card" href="case-studies/adsc.html" data-tags="mobile consumer" data-a data-d="1">
-      <div class="proj-thumb">
+      <div class="proj-thumb has-img">
+        <img src="assets/media/work/adsc-thumbnail.png" alt="ACKO Drive Service Centre case study" loading="lazy" decoding="async">
         <span class="proj-tag proj-card-tag">Insurance · Mobile</span>
         <div class="proj-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
       </div>
@@ -206,31 +241,31 @@
       </div>
     </a>
 
-    <a class="proj-card" href="#" data-tags="mobile web consumer" data-a data-d="2">
+    <a class="proj-card" href="case-studies/acko-enterprise.html" data-tags="web b2b" data-a data-d="2">
       <div class="proj-thumb">
-        <span class="proj-tag proj-card-tag">Automotive · Growth</span>
+        <span class="proj-tag proj-card-tag">Enterprise · Web</span>
         <div class="proj-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
       </div>
       <div class="proj-info">
-        <div class="proj-title">Used Car Valuation Redesign</div>
-        <div class="proj-desc">Revamped the end-to-end valuation journey across web &amp; mobile, achieving 61% MoM growth.</div>
-        <div class="proj-meta">Automotive · Web &amp; Mobile · 2024</div>
+        <div class="proj-title">ACKO Website Design</div>
+        <div class="proj-desc">Designed ACKO's Enterprise business website — the digital identity of a ₹1000+ Cr business.</div>
+        <div class="proj-meta">Enterprise · Web · 2024</div>
       </div>
     </a>
 
-    <a class="proj-card" href="#" data-tags="web b2b" data-a data-d="3">
+    <div class="proj-card" role="button" tabindex="0" onclick="openNdaModal()" onkeydown="if(event.key==='Enter'||event.key===' '){event.preventDefault();openNdaModal()}" data-tags="web b2b" data-a data-d="3" style="cursor:pointer">
       <div class="proj-thumb">
         <span class="proj-tag proj-card-tag">Enterprise · B2B</span>
         <div class="proj-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
       </div>
       <div class="proj-info">
-        <div class="proj-title">ACKO Enterprise Portal</div>
+        <div class="proj-title">ACKO Enterprise Employer Portal</div>
         <div class="proj-desc">Built a design system from scratch powering 90+ enterprise entities — scalable, accessible, pixel-perfect.</div>
         <div class="proj-meta">B2B · Web · 2024</div>
       </div>
-    </a>
+    </div>
 
-    <a class="proj-card" href="https://www.behance.net/gallery/176910761/Petbuddy-Pet-Adoption-App-Case-Study-" target="_blank" data-tags="mobile consumer" data-a data-d="4">
+    <a class="proj-card" href="https://www.behance.net/gallery/176910761/Petbuddy-Pet-Adoption-App-Case-Study-" target="_blank" rel="noopener noreferrer" data-tags="mobile consumer" data-a data-d="4">
       <div class="proj-thumb">
         <span class="proj-tag proj-card-tag">Pet Tech · Mobile App</span>
         <div class="proj-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
@@ -242,29 +277,41 @@
       </div>
     </a>
 
-    <a class="proj-card" href="#" data-tags="mobile b2b" data-a data-d="5">
+    <div class="proj-card coming-soon" data-tags="mobile web consumer" data-a data-d="5" aria-disabled="true">
       <div class="proj-thumb">
+        <span class="coming-soon-badge">Coming Soon</span>
+        <span class="proj-tag proj-card-tag">Automotive · Growth</span>
+      </div>
+      <div class="proj-info">
+        <div class="proj-title">Used Car Valuation Redesign</div>
+        <div class="proj-desc">Revamped the end-to-end valuation journey across web &amp; mobile, achieving 61% MoM growth.</div>
+        <div class="proj-meta">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="proj-card coming-soon" data-tags="mobile b2b" data-a data-d="6" aria-disabled="true">
+      <div class="proj-thumb">
+        <span class="coming-soon-badge">Coming Soon</span>
         <span class="proj-tag proj-card-tag">Telecom · Mobile</span>
-        <div class="proj-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
       </div>
       <div class="proj-info">
         <div class="proj-title">Banter Call Log Redesign</div>
         <div class="proj-desc">Reimagined the Call Log interface for a cloud-based business communication platform serving 700+ enterprises.</div>
-        <div class="proj-meta">Telecom · Mobile · 2022</div>
+        <div class="proj-meta">Coming Soon</div>
       </div>
-    </a>
+    </div>
 
-    <a class="proj-card" href="https://behance.net/adithyameroju" target="_blank" data-tags="mobile consumer" data-a data-d="6">
+    <div class="proj-card coming-soon" data-tags="mobile consumer" data-a data-d="7" aria-disabled="true">
       <div class="proj-thumb">
+        <span class="coming-soon-badge">Coming Soon</span>
         <span class="proj-tag proj-card-tag">Sports · Mobile App</span>
-        <div class="proj-arrow"><svg viewBox="0 0 24 24"><path d="M7 17L17 7M7 7h10v10"/></svg></div>
       </div>
       <div class="proj-info">
         <div class="proj-title">Lit-Athleto Sports Platform</div>
         <div class="proj-desc">Co-founded and led UX, branding &amp; content for a 0-to-1 sports performance tracking app.</div>
-        <div class="proj-meta">Sports · Mobile · Co-Founded</div>
+        <div class="proj-meta">Coming Soon</div>
       </div>
-    </a>
+    </div>
 
   </div>
 </section>
@@ -279,6 +326,20 @@
   </div>
 </footer>
 
+<div id="nda-modal" class="nda-modal" aria-hidden="true" role="dialog" aria-labelledby="nda-modal-title">
+  <div class="nda-modal-backdrop" data-nda-close></div>
+  <div class="nda-modal-panel">
+    <button type="button" class="nda-modal-close" data-nda-close aria-label="Close">&times;</button>
+    <p class="nda-modal-eyebrow">Confidential project</p>
+    <h3 id="nda-modal-title">Under NDA</h3>
+    <p class="nda-modal-body">This product is protected by a non-disclosure agreement and cannot be shared publicly. To learn more about this work, please get in touch.</p>
+    <div class="nda-modal-actions">
+      <a class="nda-btn-dark" href="mailto:akmeroju@gmail.com">akmeroju@gmail.com</a>
+      <a class="nda-btn-outline" href="/#contact" data-nda-close>Let's Talk</a>
+    </div>
+  </div>
+</div>
+
 <script>
 // Cursor
 const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
@@ -288,9 +349,36 @@ document.addEventListener('mousemove',e=>{
   rx+=(e.clientX-rx)*0.12;ry+=(e.clientY-ry)*0.12;
   ring.style.left=rx+'px';ring.style.top=ry+'px';
 });
-document.querySelectorAll('a,button').forEach(el=>{
+document.querySelectorAll('a,button,.proj-card[role="button"]').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cur.style.width='14px';cur.style.height='14px';ring.style.width='48px';ring.style.height='48px';ring.style.borderColor='rgba(201,168,76,0.6)'});
   el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(0,0,0,0.3)'});
+});
+
+// Coming soon cards — block any interaction
+document.querySelectorAll('.proj-card.coming-soon').forEach(card=>{
+  card.addEventListener('click',e=>{e.preventDefault();e.stopPropagation()});
+});
+
+// NDA modal (Employer Portal)
+function openNdaModal(){
+  const modal=document.getElementById('nda-modal');
+  if(!modal) return;
+  modal.classList.add('is-open');
+  modal.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+}
+function closeNdaModal(){
+  const modal=document.getElementById('nda-modal');
+  if(!modal) return;
+  modal.classList.remove('is-open');
+  modal.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+}
+document.querySelectorAll('[data-nda-close]').forEach(el=>{
+  el.addEventListener('click',closeNdaModal);
+});
+document.addEventListener('keydown',e=>{
+  if(e.key==='Escape') closeNdaModal();
 });
 
 // Scroll reveal
