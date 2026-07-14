@@ -1,0 +1,123 @@
+/* ADSC case study — portfolio chrome on light paper theme (no global token override) */
+body.case-study-page.adsc-page {
+  cursor: none;
+}
+
+.adsc-page #nav {
+  z-index: 500;
+  background: rgba(6, 7, 8, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.adsc-page #nav.solid {
+  background: rgba(6, 7, 8, 0.96);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.adsc-page .nav-logo {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.adsc-page .nav-links a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.adsc-page .nav-links a:hover {
+  color: #fff;
+}
+
+.adsc-page .nav-resume {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  border: none;
+}
+
+.adsc-page .nav-resume:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.adsc-page .nav-cta {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.adsc-page .nav-cta:hover {
+  background: transparent;
+  color: #fff;
+}
+
+.adsc-page .hamburger {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.adsc-page .mobile-nav {
+  z-index: 499;
+  background: rgba(6, 7, 8, 0.97);
+}
+
+.adsc-page .mobile-nav a {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.adsc-page .mobile-nav a:hover {
+  color: #c9a84c;
+}
+
+.adsc-page #progress-bar {
+  z-index: 501;
+}
+
+.adsc-page #hero {
+  padding-top: 100px;
+}
+
+.adsc-page .case-back-body {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--steel, #5b5f60);
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.2s, gap 0.2s;
+}
+
+.adsc-page .case-back-body svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.adsc-page .case-back-body:hover {
+  color: var(--ink, #1b1a17);
+}
+
+.adsc-page .case-back-body:hover svg {
+  transform: translateX(-3px);
+}
+
+.adsc-page #cursor,
+.adsc-page #cursor-ring {
+  z-index: 10002;
+}
+
+@media (max-width: 900px) {
+  .adsc-page #hero {
+    padding-top: 118px;
+  }
+
+  .adsc-page .case-back-body span {
+    font-size: 11px;
+  }
+}

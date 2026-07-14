@@ -1,0 +1,6 @@
+.DS_Store
+*.bak
+.portfolio-backups/
+__pycache__/
+*.pyc
+.cursor/

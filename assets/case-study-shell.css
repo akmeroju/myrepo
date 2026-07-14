@@ -1,0 +1,290 @@
+/* Case study page shell — restore design tokens and dark nav overrides */
+
+body.case-study-page {
+  --bg: #060708;
+  --bg-panel: #0D0F13;
+  --bg-elevated: #13151B;
+  --line: #242938;
+  --text: #F1EFE8;
+  --text-dim: #9BA0AF;
+  --text-faint: #5C6170;
+  --violet: #9B7BFF;
+  --coral: #FF6A45;
+  --mint: #2FE8AF;
+  --amber: #FFC233;
+  --gold: #c9a84c;
+  --display: 'Bricolage Grotesque', sans-serif;
+  --serif: 'Fraunces', serif;
+  --body: 'Inter', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+
+  cursor: none;
+  padding-top: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--body);
+  position: relative;
+}
+
+.case-study-page .topnav {
+  display: none !important;
+}
+
+/* ── Dark nav ── */
+.case-study-page #nav {
+  z-index: 500;
+  background: rgba(6, 7, 8, 0.88);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.case-study-page #nav.solid {
+  background: rgba(6, 7, 8, 0.92);
+  border-bottom-color: rgba(255, 255, 255, 0.1);
+}
+
+.case-study-page .nav-logo {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-page .nav-links a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.case-study-page .nav-links a:hover {
+  color: #fff;
+}
+
+.case-study-page .nav-resume {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  border: none;
+}
+
+.case-study-page .nav-resume:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.case-study-page .nav-cta {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-page .nav-cta:hover {
+  background: transparent;
+  color: #fff;
+}
+
+.case-study-page .hamburger {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+/* ── Back button (in page body, not header) ── */
+.case-study-page .case-back-body {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-decoration: none;
+  margin-bottom: 28px;
+  transition: color 0.2s, gap 0.2s;
+}
+
+.case-study-page .case-back-body svg {
+  width: 14px;
+  height: 14px;
+  stroke: currentColor;
+  fill: none;
+  stroke-width: 2;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.case-study-page .case-back-body:hover {
+  color: var(--text);
+}
+
+.case-study-page .case-back-body:hover svg {
+  transform: translateX(-3px);
+}
+
+/* ── Dark mobile nav ── */
+.case-study-page .mobile-nav {
+  z-index: 499;
+  background: rgba(6, 7, 8, 0.97);
+}
+
+.case-study-page .mobile-nav a {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.case-study-page .mobile-nav a:hover {
+  color: var(--gold);
+}
+
+.case-study-page .progress-rail {
+  display: none !important;
+}
+
+.case-study-page #progress-bar {
+  z-index: 501;
+}
+
+.case-study-page .hero {
+  padding-top: 88px !important;
+}
+
+.case-study-page .hero-inner {
+  text-align: center;
+}
+
+.case-study-page .hero .hero-sub {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.case-study-page .hero .meta-row {
+  justify-content: center;
+}
+
+.case-study-page .hero .device-mockup {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.case-study-page #cursor,
+.case-study-page #cursor-ring {
+  z-index: 10002;
+}
+
+body.case-study-page.nav-hover #cursor {
+  opacity: 1 !important;
+}
+
+body.case-study-page.nav-hover #cursor-ring {
+  width: 40px;
+  height: 40px;
+  border: 1.5px solid rgba(255, 255, 255, 0.5);
+  opacity: 1 !important;
+}
+
+/* Ensure reveal content is visible once animated in */
+.case-study-page .reveal.is-visible {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Execution section — framed device mockup */
+.case-study-page .exec-hero-mockup {
+  background: #060708;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.case-study-page .exec-hero-mockup img {
+  object-fit: contain;
+  object-position: center;
+}
+
+/* Project Overview carousel — sharper rendering when hi-res assets are used */
+.case-study-page .carousel-slide {
+  background: #fff;
+  line-height: 0;
+}
+
+.case-study-page .carousel-slide img {
+  object-fit: contain;
+  background: #fff;
+  display: block;
+  width: 100%;
+  height: auto;
+  min-height: 360px;
+  image-rendering: -webkit-optimize-contrast;
+}
+
+/* Execution grid — show full landing page width without side crop */
+.case-study-page .grid-6 .browser-body {
+  height: auto !important;
+  min-height: 0;
+  display: block;
+  background: #fff;
+  overflow: hidden;
+  line-height: 0;
+}
+
+.case-study-page .grid-6 .browser-body img {
+  width: 100%;
+  height: auto;
+  object-fit: contain !important;
+  object-position: top center;
+  display: block;
+}
+
+.case-study-page .grid-6 .browser-frame {
+  display: flex;
+  flex-direction: column;
+}
+
+/* Case study closing block (above shared portfolio footer) */
+.case-study-page .case-closing {
+  padding: 100px 0 0;
+  text-align: left;
+  background: var(--bg-panel);
+  margin-top: 0;
+  border-top: 1px solid var(--line);
+}
+
+.case-study-page .case-closing .closing-heading {
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(30px, 5vw, 54px);
+  line-height: 1.18;
+  max-width: 1140px;
+  background: linear-gradient(90deg, var(--coral), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.case-study-page .case-closing .foot-sub {
+  color: var(--text-dim);
+  font-size: 16px;
+  margin-top: 22px;
+  max-width: 680px;
+}
+
+.case-study-page .case-closing .closing-divider {
+  height: 1px;
+  background: var(--line);
+  margin: 32px 0 24px;
+}
+
+.case-study-page .case-closing .closing-meta-row {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--text-faint);
+  text-transform: uppercase;
+}
+
+@media (max-width: 900px) {
+  .case-study-page .hero {
+    padding-top: 72px !important;
+  }
+
+  .case-study-page .case-back-body span {
+    display: none;
+  }
+}

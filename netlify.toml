@@ -1,0 +1,7 @@
+[build]
+  publish = "."
+
+[[redirects]]
+  from = "/portfolio"
+  to = "/adithya_portfolio_v16_fixed.html"
+  status = 302

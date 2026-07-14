@@ -1,0 +1,168 @@
+/* Visuals explorer + live links */
+.case-study-page #case-visuals {
+  padding: 80px 0 40px;
+}
+
+.case-study-page .visuals-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 28px 0 16px;
+}
+
+.case-study-page .visuals-tab {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 8px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: transparent;
+  color: var(--text-dim);
+  cursor: none;
+  transition: border-color 0.2s, color 0.2s, background 0.2s;
+}
+
+.case-study-page .visuals-tab:hover,
+.case-study-page .visuals-tab.active {
+  border-color: var(--violet);
+  color: var(--text);
+  background: rgba(155, 123, 255, 0.08);
+}
+
+.case-study-page .grad-live {
+  background: linear-gradient(90deg, var(--coral), var(--violet));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.case-study-page .visuals-viewport {
+  position: relative;
+  height: min(72vh, 720px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  background: #0b0d12;
+  overflow: hidden;
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+}
+
+.case-study-page .visuals-viewport.is-dragging {
+  cursor: grabbing;
+}
+
+.case-study-page .visuals-canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform-origin: 0 0;
+  will-change: transform;
+}
+
+.case-study-page .visuals-canvas img {
+  display: block;
+  width: auto;
+  height: auto;
+  max-width: none;
+  pointer-events: none;
+  background: #fff;
+}
+
+.case-study-page .visuals-hint {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  color: var(--text-faint);
+  text-align: center;
+}
+
+.case-study-page .visuals-controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.case-study-page .visuals-zoom-btn {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  padding: 6px 12px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-elevated);
+  color: var(--text-dim);
+  cursor: none;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.case-study-page .visuals-zoom-btn:hover {
+  border-color: var(--violet);
+  color: var(--text);
+}
+
+/* Live links */
+.case-study-page #case-live-links {
+  padding: 40px 0 80px;
+}
+
+.case-study-page .live-links-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: 28px;
+}
+
+.case-study-page .live-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 16px 20px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--bg-elevated);
+  color: var(--text);
+  text-decoration: none;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  transition: border-color 0.2s, transform 0.2s, background 0.2s;
+}
+
+.case-study-page .live-link span {
+  color: var(--violet);
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.2s;
+}
+
+.case-study-page .live-link:hover {
+  border-color: var(--violet);
+  background: rgba(155, 123, 255, 0.06);
+  transform: translateY(-2px);
+}
+
+.case-study-page .live-link:hover span {
+  transform: translate(3px, -3px);
+}
+
+@media (max-width: 860px) {
+  .case-study-page .live-links-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 560px) {
+  .case-study-page .live-links-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .case-study-page .visuals-viewport {
+    height: min(60vh, 520px);
+  }
+}

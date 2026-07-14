@@ -1,0 +1,163 @@
+/* Let's Talk — shared contact block before footer on project pages */
+.case-study-page section.portfolio-contact {
+  --dark: #0a0a0a;
+  --gold: #c9a84c;
+  background: var(--dark);
+  padding: 32px 56px 48px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  margin: 0;
+}
+
+.case-study-page section.portfolio-contact .contact-glow {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background: radial-gradient(circle, rgba(201, 168, 76, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.case-study-page section.portfolio-contact .contact-lbl {
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+}
+
+.case-study-page section.portfolio-contact .contact-h {
+  font-family: var(--display, 'Bricolage Grotesque', sans-serif);
+  font-size: clamp(2.5rem, 7vw, 6.5rem);
+  font-weight: 900;
+  line-height: 1.04;
+  color: #fff;
+  margin-bottom: 16px;
+  letter-spacing: -0.04em;
+  position: relative;
+  z-index: 1;
+  white-space: nowrap;
+}
+
+.case-study-page section.portfolio-contact .contact-h em {
+  font-style: normal;
+  -webkit-text-stroke: 1px var(--gold);
+  color: transparent;
+}
+
+.case-study-page section.portfolio-contact .contact-sub {
+  font-size: 0.88rem;
+  color: #444;
+  font-weight: 300;
+  margin-bottom: 36px;
+  position: relative;
+  z-index: 1;
+}
+
+.case-study-page section.portfolio-contact .contact-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.case-study-page section.portfolio-contact .contact-btn {
+  display: inline-block;
+  padding: 14px 48px;
+  background: var(--gold);
+  color: var(--dark);
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: opacity 0.2s, transform 0.2s;
+}
+
+.case-study-page section.portfolio-contact .contact-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-3px);
+}
+
+.case-study-page section.portfolio-contact .contact-btn-outline {
+  display: inline-block;
+  padding: 14px 48px;
+  border: 1.5px solid #222;
+  color: #555;
+  text-decoration: none;
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  border-radius: 2px;
+  transition: border-color 0.2s, color 0.2s;
+}
+
+.case-study-page section.portfolio-contact .contact-btn-outline:hover {
+  border-color: #555;
+  color: #999;
+}
+
+.case-study-page section.portfolio-contact .contact-info {
+  display: flex;
+  justify-content: center;
+  gap: 64px;
+  margin-top: 40px;
+  flex-wrap: wrap;
+  position: relative;
+  z-index: 1;
+}
+
+.case-study-page section.portfolio-contact .cinfo-item {
+  text-align: left;
+}
+
+.case-study-page section.portfolio-contact .cinfo-label {
+  font-size: 0.58rem;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #333;
+  margin-bottom: 6px;
+}
+
+.case-study-page section.portfolio-contact .cinfo-val {
+  font-size: 0.88rem;
+  font-weight: 400;
+  color: #666;
+}
+
+.case-study-page section.portfolio-contact .cinfo-val a {
+  color: #666;
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.case-study-page section.portfolio-contact .cinfo-val a:hover {
+  color: var(--gold);
+}
+
+@media (max-width: 900px) {
+  .case-study-page section.portfolio-contact {
+    padding: 28px 24px 40px;
+  }
+
+  .case-study-page section.portfolio-contact .contact-h {
+    white-space: normal;
+  }
+
+  .case-study-page section.portfolio-contact .contact-info {
+    flex-direction: column;
+    gap: 28px;
+    align-items: center;
+  }
+}

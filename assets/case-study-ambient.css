@@ -1,0 +1,135 @@
+/* Subtle mouse-reactive ambient glows */
+body.case-study-page {
+  isolation: isolate;
+}
+
+.case-study-page .ambient-global {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.case-study-page .ambient-global .ambient-orb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 520px;
+  height: 520px;
+  margin: -260px 0 0 -260px;
+  border-radius: 50%;
+  pointer-events: none;
+  filter: blur(90px);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.7s ease;
+  mix-blend-mode: screen;
+}
+
+.case-study-page .ambient-global.is-active .ambient-orb {
+  opacity: 0.45;
+}
+
+.case-study-page .ambient-global.is-hero-active .ambient-orb {
+  opacity: 0;
+}
+
+.case-study-page .ambient-global-a {
+  background: radial-gradient(circle, rgba(155, 123, 255, 0.4) 0%, transparent 68%);
+}
+
+.case-study-page .ambient-global-b {
+  background: radial-gradient(circle, rgba(255, 106, 69, 0.28) 0%, transparent 68%);
+}
+
+.case-study-page .ambient-global-c {
+  background: radial-gradient(circle, rgba(47, 232, 175, 0.18) 0%, transparent 68%);
+}
+
+.case-study-page [data-ambient] {
+  position: relative;
+  overflow: visible;
+}
+
+.case-study-page [data-ambient] > :not(.ambient-orb):not(.glow) {
+  position: relative;
+  z-index: 1;
+}
+
+.case-study-page .ambient-orb {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 380px;
+  height: 380px;
+  margin: -190px 0 0 -190px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 0;
+  filter: blur(75px);
+  opacity: 0;
+  will-change: transform, opacity;
+  transition: opacity 0.45s ease;
+  mix-blend-mode: screen;
+}
+
+.case-study-page [data-ambient].ambient-active .ambient-orb {
+  opacity: 0.65;
+}
+
+.case-study-page .ambient-orb-violet {
+  background: radial-gradient(circle, rgba(155, 123, 255, 0.45) 0%, transparent 70%);
+}
+
+.case-study-page .ambient-orb-coral {
+  background: radial-gradient(circle, rgba(255, 106, 69, 0.32) 0%, transparent 70%);
+}
+
+.case-study-page .ambient-orb-mint {
+  background: radial-gradient(circle, rgba(47, 232, 175, 0.24) 0%, transparent 70%);
+}
+
+.case-study-page .hero .glow {
+  position: absolute;
+  top: 4%;
+  right: -16%;
+  z-index: 0;
+}
+
+.case-study-page .live-link {
+  transition: border-color 0.25s, transform 0.25s, background 0.25s, box-shadow 0.25s;
+}
+
+.case-study-page .live-link:hover {
+  box-shadow: 0 8px 32px -12px rgba(155, 123, 255, 0.35);
+}
+
+.case-study-page .reflect-row {
+  transition: padding-left 0.3s ease, color 0.2s;
+}
+
+.case-study-page .reflect-row:hover {
+  padding-left: 8px;
+}
+
+.case-study-page .carousel-dot.active {
+  animation: dotPulse 2s ease-in-out infinite;
+}
+
+@keyframes dotPulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(155, 123, 255, 0.4); }
+  50% { box-shadow: 0 0 0 6px rgba(155, 123, 255, 0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .case-study-page .ambient-global,
+  .case-study-page .ambient-orb,
+  .case-study-page .hero .glow {
+    display: none !important;
+  }
+
+  .case-study-page .carousel-dot.active {
+    animation: none;
+  }
+}
