@@ -6,7 +6,7 @@ After split:
   - assets/portfolio.css       (~30KB)  — edit styles here
   - assets/portfolio.js        (~15KB)  — edit logic here
   - assets/portfolio.frames.js (~17MB)  — DO NOT EDIT (hero frame data)
-  - adithya_portfolio_v16_fixed.html     — HTML shell only (~1-2MB with inline img fallbacks)
+  - index.html     — HTML shell only (~1-2MB with inline img fallbacks)
 
 Run once after restoring a valid monolith, or when migrating.
 """
@@ -17,7 +17,7 @@ import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-HTML = ROOT / "adithya_portfolio_v16_fixed.html"
+HTML = ROOT / "index.html"
 CSS = ROOT / "assets" / "portfolio.css"
 JS = ROOT / "assets" / "portfolio.js"
 FRAMES = ROOT / "assets" / "portfolio.frames.js"

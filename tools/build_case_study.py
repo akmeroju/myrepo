@@ -7,7 +7,7 @@ from typing import List, Optional, Tuple
 ROOT = Path(__file__).resolve().parent.parent
 SRC = Path("/Users/adithya.meroju/Downloads/acko-enterprise-case-study_8.html")
 OUT = ROOT / "case-studies" / "acko-enterprise.html"
-HOME = "../adithya_portfolio_v16_fixed.html"
+HOME = "../"
 MEDIA = ROOT / "assets" / "media" / "case-studies"
 EXEC_MOCKUP = MEDIA / "execution-mockup.png"
 HERO_VIDEO = MEDIA / "hero-video.mp4"

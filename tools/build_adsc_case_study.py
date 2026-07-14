@@ -5,7 +5,7 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
 OUT = ROOT / "case-studies" / "adsc.html"
-HOME = "../adithya_portfolio_v16_fixed.html"
+HOME = "../"
 
 NAV_SHELL = f"""
 <div id="progress-bar"></div>

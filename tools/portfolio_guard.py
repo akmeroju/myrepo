@@ -2,7 +2,7 @@
 """
 Portfolio integrity guard — backup, validate, safe write, auto-rollback.
 
-NEVER edit adithya_portfolio_v16_fixed.html with raw search-replace on the
+NEVER edit index.html with raw search-replace on the
 monolith. Edit assets/portfolio.css, assets/portfolio.js, or HTML body markers.
 """
 from __future__ import annotations
@@ -17,7 +17,7 @@ from datetime import datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-HTML = ROOT / "adithya_portfolio_v16_fixed.html"
+HTML = ROOT / "index.html"
 CSS = ROOT / "assets" / "portfolio.css"
 JS = ROOT / "assets" / "portfolio.js"
 FRAMES = ROOT / "assets" / "portfolio.frames.js"

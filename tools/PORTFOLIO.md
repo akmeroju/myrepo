@@ -5,7 +5,7 @@ The portfolio was split to stop accidental corruption of the 21MB monolithic HTM
 ## Architecture
 
 ```
-adithya_portfolio_v16_fixed.html   ← HTML shell (~3.7MB, has inline carousel fallbacks)
+index.html   ← HTML shell (~3.7MB, has inline carousel fallbacks)
 assets/portfolio.css               ← All styles (safe to edit)
 assets/portfolio.js                ← All logic (safe to edit)
 assets/portfolio.frames.js         ← Hero frame data (DO NOT EDIT)
@@ -32,7 +32,7 @@ python3 tools/split_portfolio.py
 
 1. **Styles** → `assets/portfolio.css`
 2. **JavaScript** → `assets/portfolio.js`
-3. **HTML structure** → `adithya_portfolio_v16_fixed.html` (avoid bulk search-replace)
+3. **HTML structure** → `index.html` (avoid bulk search-replace)
 4. **Never edit** → `assets/portfolio.frames.js`
 5. **Never run** → `apply_*.py` after split (they are blocked)
 
@@ -48,5 +48,5 @@ Splitting CSS and JS into small external files eliminates that risk for 95% of c
 
 ```bash
 python3 -m http.server 8080
-# Open http://localhost:8080/adithya_portfolio_v16_fixed.html
+# Open http://localhost:8080/
 ```
