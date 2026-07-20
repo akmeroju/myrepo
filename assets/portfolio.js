@@ -191,8 +191,10 @@ initAboutScrollHighlight();
 // ── CUSTOM CURSOR (mix-blend-mode:difference handles color inversion automatically) ──
 const cur   = document.getElementById('cursor');
 const ring  = document.getElementById('cursor-ring');
+const finePointerCursor = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 let mx=0, my=0, rx=0, ry=0;
 
+if (cur && ring && finePointerCursor) {
 document.addEventListener('mousemove', e => {
   mx = e.clientX; my = e.clientY;
   cur.style.left = mx + 'px';
@@ -223,6 +225,7 @@ document.querySelectorAll('a, button, .wcard, .skill-tag').forEach(el => {
     ring.style.height = '40px';
   });
 });
+}
 
 // ── GALLERY CAROUSEL handled in media loader below
 

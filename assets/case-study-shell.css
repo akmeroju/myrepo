@@ -287,4 +287,9 @@ body.case-study-page.nav-hover #cursor-ring {
   .case-study-page .case-back-body span {
     display: none;
   }
+
+  .case-study-page .case-closing {
+    padding-top: 48px;
+    padding-bottom: 24px;
+  }
 }

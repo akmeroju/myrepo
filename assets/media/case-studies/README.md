@@ -8,6 +8,12 @@ Original hero screen recording for the device mockup at the top of the case stud
 
 Recommended: MP4 (H.264), **1920px+ wide**, minimal compression.
 
+## hero-video-mobile.mp4
+Mobile-optimized hero screen video (~3 MB, 1280px wide). Used on viewports ≤900px.
+
+## hero-video-poster.jpg
+First-frame poster shown while the hero video loads (especially on mobile).
+
 ## overview/
 Carousel + grid preview slides for **Project Overview** and **Execution grid**.
 

@@ -165,4 +165,14 @@
   .case-study-page .visuals-viewport {
     height: min(60vh, 520px);
   }
+
+  .case-study-page #case-live-links {
+    padding-bottom: 32px;
+  }
+}
+
+@media (max-width: 900px) {
+  .case-study-page #case-live-links {
+    padding-bottom: 40px;
+  }
 }

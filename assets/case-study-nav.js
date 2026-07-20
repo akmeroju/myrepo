@@ -2,8 +2,9 @@
 const cur = document.getElementById('cursor');
 const ring = document.getElementById('cursor-ring');
 const navEl = document.getElementById('nav');
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 
-if (cur && ring) {
+if (cur && ring && finePointer) {
   document.addEventListener('mousemove', e => {
     const x = e.clientX;
     const y = e.clientY;
@@ -65,7 +66,7 @@ if (hamburger && mobileNav) {
   });
 }
 
-document.querySelectorAll('.nav-cta').forEach(btn => {
+if (finePointer) document.querySelectorAll('.nav-cta').forEach(btn => {
   btn.addEventListener('mousemove', e => {
     const r = btn.getBoundingClientRect();
     const x = (e.clientX - r.left - r.width / 2) * 0.28;

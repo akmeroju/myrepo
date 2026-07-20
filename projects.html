@@ -15,11 +15,15 @@
     }
     *{margin:0;padding:0;box-sizing:border-box}
     html{scroll-behavior:smooth}
-    body{font-family:var(--font);background:var(--bg);color:var(--text);cursor:none;-webkit-font-smoothing:antialiased}
+    body{font-family:var(--font);background:var(--bg);color:var(--text);-webkit-font-smoothing:antialiased}
+    @media(hover:hover) and (pointer:fine){body{cursor:none}}
 
     /* Cursor */
     #cursor{position:fixed;width:8px;height:8px;background:var(--dark);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:width 0.2s,height 0.2s,background 0.2s}
     #cursor-ring{position:fixed;width:32px;height:32px;border:1.5px solid rgba(0,0,0,0.3);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:transform 0.12s ease,width 0.2s,height 0.2s,border-color 0.2s}
+    @media not all and (hover:hover) and (pointer:fine){
+      #cursor,#cursor-ring{display:none!important}
+    }
 
     /* Nav */
     nav{
@@ -356,9 +360,11 @@
 </div>
 
 <script>
-// Cursor
+// Cursor (desktop pointer only)
+const finePointer=window.matchMedia('(hover: hover) and (pointer: fine)').matches;
 const cur=document.getElementById('cursor'),ring=document.getElementById('cursor-ring');
 let rx=0,ry=0;
+if(cur&&ring&&finePointer){
 document.addEventListener('mousemove',e=>{
   cur.style.left=e.clientX+'px';cur.style.top=e.clientY+'px';
   rx+=(e.clientX-rx)*0.12;ry+=(e.clientY-ry)*0.12;
@@ -368,6 +374,7 @@ document.querySelectorAll('a,button,.proj-card[role="button"]').forEach(el=>{
   el.addEventListener('mouseenter',()=>{cur.style.width='14px';cur.style.height='14px';ring.style.width='48px';ring.style.height='48px';ring.style.borderColor='rgba(201,168,76,0.6)'});
   el.addEventListener('mouseleave',()=>{cur.style.width='8px';cur.style.height='8px';ring.style.width='32px';ring.style.height='32px';ring.style.borderColor='rgba(0,0,0,0.3)'});
 });
+}
 
 // Coming soon cards — block any interaction
 document.querySelectorAll('.proj-card.coming-soon').forEach(card=>{

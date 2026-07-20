@@ -157,6 +157,33 @@ TOPNAV_PATTERN = re.compile(
 CAROUSEL_SLIDE_IMG = '<div class="carousel-slide"><img src="data:image'
 GRID_BODY_IMG = '<div class="browser-body"><img src="data:image'
 HERO_VIDEO_MARKER = '<video class="screen-video"'
+HERO_VIDEO_REPLACEMENT = (
+    '<video class="screen-video" autoplay muted loop playsinline preload="metadata" '
+    'poster="../assets/media/case-studies/hero-video-poster.jpg"></video>'
+)
+HERO_VIDEO_INIT = """
+  // Hero device video — mobile-optimized src + reliable autoplay
+  (function () {
+    const video = document.querySelector('.device-mockup .screen-video');
+    if (!video) return;
+    const isMobile = window.matchMedia('(max-width: 900px)').matches;
+    video.src = isMobile
+      ? '../assets/media/case-studies/hero-video-mobile.mp4'
+      : '../assets/media/case-studies/hero-video.mp4';
+    const tryPlay = () => video.play().catch(() => {});
+    video.addEventListener('loadeddata', tryPlay, { once: true });
+    if ('IntersectionObserver' in window) {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) tryPlay();
+        });
+      }, { threshold: 0.25 });
+      io.observe(video);
+    } else {
+      tryPlay();
+    }
+  })();
+"""
 
 OVERVIEW_ALTS = [
     "ACKO Enterprise homepage",
@@ -197,16 +224,14 @@ def replace_hero_video(text: str) -> str:
     start = text.find(HERO_VIDEO_MARKER)
     if start == -1:
         raise SystemExit("Hero screen video not found")
-    src_start = text.find('src="', start)
-    if src_start == -1:
-        raise SystemExit("Hero video src not found")
-    src_start += len('src="')
-    src_end = text.find('"', src_start)
-    if src_end == -1:
-        raise SystemExit("Hero video src end not found")
-    rel = "../assets/media/case-studies/hero-video.mp4"
-    text = text[:src_start] + rel + text[src_end:]
-    print(f"Using hero video: {HERO_VIDEO.name}")
+    end = text.find("</video>", start)
+    if end == -1:
+        raise SystemExit("Hero video end tag not found")
+    end += len("</video>")
+    text = text[:start] + HERO_VIDEO_REPLACEMENT + text[end:]
+    if HERO_VIDEO_INIT.strip() not in text:
+        text = text.replace("  })();\n</script>", "  })();\n" + HERO_VIDEO_INIT + "</script>", 1)
+    print(f"Using hero video: {HERO_VIDEO.name} (+ mobile + poster)")
     return text
 
 
