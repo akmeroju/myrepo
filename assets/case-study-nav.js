@@ -44,7 +44,7 @@ if (progressBar) {
 if (navEl) {
   navEl.classList.add('solid');
   window.addEventListener('scroll', () => {
-    navEl.classList.toggle('solid', window.scrollY > 8);
+    if (window.scrollY > 8) navEl.classList.add('solid');
   }, { passive: true });
 }
 

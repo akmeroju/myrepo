@@ -1,28 +1,15 @@
 [build]
   publish = "."
 
-# Serve portfolio at / without changing the URL
-[[redirects]]
-  from = "/"
-  to = "/adithya-portfolio.html"
-  status = 200
-
-# Direct file URL → clean root
+# Legacy filenames → clean root
 [[redirects]]
   from = "/adithya-portfolio.html"
   to = "/"
   status = 301
   force = true
 
-# Legacy filenames
 [[redirects]]
   from = "/adithya_portfolio_v16_fixed.html"
-  to = "/"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "/index.html"
   to = "/"
   status = 301
   force = true

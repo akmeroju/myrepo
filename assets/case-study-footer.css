@@ -34,21 +34,7 @@
 }
 
 .case-study-page footer.portfolio-site-footer .footer-hero-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 20px;
-  z-index: 2;
-  margin: 0;
-  padding: 0 24px;
-  text-align: center;
-  font-size: 0.95rem;
-  font-weight: 400;
-  letter-spacing: 0.02em;
-  line-height: 1.4;
-  color: rgba(255, 255, 255, 0.72);
-  white-space: nowrap;
-  pointer-events: none;
+  display: none;
 }
 
 .case-study-page footer.portfolio-site-footer .footer-hero-caption .caption-gold {
@@ -105,21 +91,35 @@
 
 @media (max-width: 900px) {
   .case-study-page footer.portfolio-site-footer .footer-bottom {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    padding: 24px 20px 32px;
     text-align: center;
-    gap: 12px;
-    padding: 20px 24px;
   }
 
   .case-study-page footer.portfolio-site-footer .footer-copy,
   .case-study-page footer.portfolio-site-footer .footer-tagline,
   .case-study-page footer.portfolio-site-footer .footer-links {
-    justify-self: center;
+    justify-self: unset;
+    width: 100%;
+    max-width: 28rem;
   }
 
-  .case-study-page footer.portfolio-site-footer .footer-hero-caption {
+  .case-study-page footer.portfolio-site-footer .footer-copy {
+    line-height: 1.6;
     white-space: normal;
-    font-size: 0.85rem;
-    bottom: 16px;
+  }
+
+  .case-study-page footer.portfolio-site-footer .footer-hero-img {
+    margin-bottom: 0;
+    opacity: 0.85;
+  }
+
+  .case-study-page footer.portfolio-site-footer .footer-links {
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
   }
 }

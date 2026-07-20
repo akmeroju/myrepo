@@ -61,6 +61,62 @@ nav {
   border-bottom: 1px solid transparent;
 }
 
+.case-study-page #nav {
+  background: rgba(6, 7, 8, 0.92);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.case-study-page .nav-logo {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-page .nav-links a {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.case-study-page .nav-links a:hover {
+  color: #fff;
+}
+
+.case-study-page .nav-resume {
+  background: rgba(255, 255, 255, 0.08);
+  color: rgba(255, 255, 255, 0.85);
+  border: none;
+}
+
+.case-study-page .nav-resume:hover {
+  background: rgba(255, 255, 255, 0.14);
+  color: #fff;
+}
+
+.case-study-page .nav-cta {
+  border-color: rgba(255, 255, 255, 0.4);
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-page .nav-cta:hover {
+  background: transparent;
+  color: #fff;
+}
+
+.case-study-page .hamburger {
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.case-study-page .mobile-nav {
+  background: rgba(6, 7, 8, 0.97);
+}
+
+.case-study-page .mobile-nav a {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.case-study-page .mobile-nav a:hover {
+  color: #c9a84c;
+}
+
 .nav-logo {
   font-size: 0.82rem;
   font-weight: 700;
@@ -255,6 +311,10 @@ nav {
 @media (max-width: 900px) {
   .hamburger {
     display: flex;
+  }
+
+  .nav-links {
+    display: none;
   }
 
   .nav-cta {

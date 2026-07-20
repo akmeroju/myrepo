@@ -11,7 +11,7 @@ from portfolio_guard import is_external_mode  # noqa: E402
 if is_external_mode():
     sys.exit("BLOCKED: Portfolio is split. Edit assets/portfolio.css / portfolio.js instead.")
 
-HTML = ROOT / "adithya-portfolio.html"
+HTML = ROOT / "index.html"
 
 NEW_CSS = """
 /* ── CAREER TOGGLE POLISH ── */

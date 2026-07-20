@@ -23,6 +23,7 @@ Project card thumbnails for the portfolio **Case Studies** grid.
 
 - `acko-website-design.png` — ACKO Website Design card (`wca`)
 - `adsc-thumbnail.png` — ACKO Drive Service Centre card (`wcb`)
+- `petbuddy-thumbnail.png` — Pet Buddy card (`wcd`)
 
 ## case-studies/
 ACKO case study assets — see `case-studies/README.md`.

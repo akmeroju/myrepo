@@ -1,5 +1,19 @@
 const N = FRAMES.length;
-const imgs = FRAMES.map(src => { const im = new Image(); im.src = src; return im; });
+let imgs = [];
+
+function startFramePreload() {
+  if (imgs.length) return imgs;
+  imgs = FRAMES.map(src => { const im = new Image(); im.src = src; return im; });
+  return imgs;
+}
+
+window.__portfolioAppLoaded = true;
+
+if (window.__portfolioLoaderDone || sessionStorage.getItem('akm_portfolio_loaded')) {
+  startFramePreload();
+} else {
+  window.addEventListener('portfolio:loader-done', () => startFramePreload(), { once: true });
+}
 
 // ── INSTANT HASH SCROLL (back links to #work) ──
 (function instantHashScroll() {
@@ -57,13 +71,18 @@ function tick() {
   if (Math.abs(diff) < 0.01) { dispFrame = tgtFrame; rafId = null; return; }
   dispFrame += diff * 0.07;
   const fi = Math.min(N-1, Math.max(0, Math.round(dispFrame)));
-  if (fi !== lastFi) { canvas.src = imgs[fi].src; lastFi = fi; }
+  if (fi !== lastFi) {
+    const src = imgs[fi]?.src || FRAMES[fi];
+    if (src) canvas.src = src;
+    lastFi = fi;
+  }
   rafId = requestAnimationFrame(tick);
 }
 
 function onScroll() {
   const rect = heroSec.getBoundingClientRect();
   const p = Math.max(0, Math.min(1, -rect.top / (heroSec.offsetHeight - window.innerHeight)));
+  const isMobileHero = window.matchMedia('(max-width: 768px)').matches;
 
   navEl.classList.toggle('solid', p > 0.01 || window.scrollY > window.innerHeight);
 
@@ -80,7 +99,11 @@ function onScroll() {
     const t = (p - INTRO_EXIT_START) / (INTRO_EXIT_END - INTRO_EXIT_START);
     introText.style.transition = 'none';
     introText.style.opacity    = (1 - t).toString();
-    introText.style.transform  = `translateY(${-t * 70}px) scale(${1 - t * 0.04})`;
+    if (!isMobileHero) {
+      introText.style.transform  = `translateY(${-t * 70}px) scale(${1 - t * 0.04})`;
+    } else {
+      introText.style.transform = '';
+    }
   } else {
     if (!introGone) {
       introGone = true;
@@ -99,7 +122,10 @@ function onScroll() {
   }
 }
 
-canvas.src = imgs[0].src;
+if (FRAMES[0]) {
+  const canvasInit = document.getElementById('hero-canvas');
+  if (canvasInit && !canvasInit.getAttribute('src')) canvasInit.src = FRAMES[0];
+}
 window.addEventListener('scroll', onScroll, { passive: true });
 
 // Nav solid when scrolled past hero
@@ -138,10 +164,20 @@ function initAboutScrollHighlight() {
 
   if (prefersReduced) return;
 
+  const aboutSection = document.getElementById('about');
+
   const update = () => {
-    const trigger = window.innerHeight * 0.72;
-    allWords.forEach(span => {
-      span.classList.toggle('is-typed', span.getBoundingClientRect().top < trigger);
+    if (!aboutSection) return;
+    const rect = aboutSection.getBoundingClientRect();
+    const vh = window.innerHeight;
+    const start = vh * 0.78;
+    const end = vh * 0.35;
+    const scrollRange = rect.height + start - end;
+    const scrolled = start - rect.top;
+    const progress = Math.max(0, Math.min(1, scrolled / scrollRange));
+    const typedCount = Math.floor(progress * allWords.length);
+    allWords.forEach((span, i) => {
+      span.classList.toggle('is-typed', i < typedCount);
     });
   };
 
@@ -403,6 +439,15 @@ function initCarousel({ trackId, dotsId, prevId, nextId, controlsId, autoplay = 
   const pauseEl = track.closest('.ach-carousel-wrap, .gallery-wrap') || track;
   pauseEl?.addEventListener('mouseenter', stopAutoplay);
   pauseEl?.addEventListener('mouseleave', startAutoplay);
+
+  let resizeTimer;
+  window.addEventListener('resize', () => {
+    clearTimeout(resizeTimer);
+    resizeTimer = setTimeout(() => {
+      refresh();
+      goTo(current);
+    }, 100);
+  });
 
   startAutoplay();
   return { refresh, goTo, startAutoplay, stopAutoplay, get current() { return current; } };
