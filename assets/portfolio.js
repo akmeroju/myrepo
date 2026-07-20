@@ -293,10 +293,11 @@ window.addEventListener('scroll', () => {
 backTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));
 
 
-// ── HERO SCROLL CURSOR LABEL ─────────────────────────────────────────────
+// ── HERO SCROLL CURSOR LABEL (desktop pointer only) ─────────────────────
 const cursorLabel = document.getElementById('cursor-label');
 const heroSticky = document.querySelector('.hero-sticky');
-if (cursorLabel) {
+const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+if (cursorLabel && finePointer) {
   document.addEventListener('mousemove', e => {
     cursorLabel.style.left = e.clientX + 'px';
     cursorLabel.style.top  = e.clientY + 'px';
@@ -304,7 +305,7 @@ if (cursorLabel) {
     document.body.classList.toggle('nav-hover', overHeader);
   });
 }
-if (cursorLabel && heroSticky) {
+if (cursorLabel && heroSticky && finePointer) {
   const heroObs = new IntersectionObserver(([entry]) => {
     document.body.classList.toggle('hero-active', entry.isIntersecting);
   }, { threshold: 0.4 });
@@ -328,17 +329,19 @@ document.querySelectorAll('.exp-item').forEach((item, i) => {
   });
 });
 // ── IMAGE FOLDER SCANNER ─────────────────────────────────────────────────
+const VISUALS_MANIFEST_URL = 'assets/media/visuals/manifest.json';
+
 async function imageExists(url) {
-  return new Promise(resolve => {
-    const img = new Image();
-    img.onload = () => resolve(true);
-    img.onerror = () => resolve(false);
-    img.src = url + '?t=' + Date.now();
-  });
+  try {
+    const res = await fetch(url, { method: 'HEAD', cache: 'force-cache' });
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 async function scanFolder(base, max = 24) {
-  const exts = ['jpg', 'jpeg', 'png', 'webp'];
+  const exts = ['webp', 'jpg', 'jpeg', 'png'];
   const found = [];
   for (let i = 1; i <= max; i++) {
     const names = [String(i).padStart(2, '0'), String(i)];
@@ -350,22 +353,61 @@ async function scanFolder(base, max = 24) {
       }
       if (matched) break;
     }
+    if (!matched && found.length) break;
   }
   return found;
 }
 
+async function loadVisualsManifest() {
+  try {
+    const res = await fetch(VISUALS_MANIFEST_URL, { cache: 'force-cache' });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data.images || []);
+  } catch {
+    return [];
+  }
+}
+
+async function resolveVisualsUrls() {
+  if (window.__portfolioVisualsUrls?.length) return window.__portfolioVisualsUrls;
+  const manifest = await loadVisualsManifest();
+  if (manifest.length) {
+    window.__portfolioVisualsUrls = manifest;
+    return manifest;
+  }
+  const scanned = await scanFolder('assets/media/visuals', 24);
+  if (scanned.length) window.__portfolioVisualsUrls = scanned;
+  return scanned;
+}
+
 function buildVisualsMarquee(track, urls) {
+  if (track.dataset.visualsReady) return;
+  track.dataset.visualsReady = '1';
   track.innerHTML = '';
   const items = urls.map((src, i) => {
     const item = document.createElement('div');
     item.className = 'visuals-marquee-item';
-    item.innerHTML = `<img src="${src}" alt="Visual craft frame ${i + 1}" loading="lazy" decoding="async">`;
+    item.innerHTML = `<img src="${src}" alt="Visual craft frame ${i + 1}" loading="eager" decoding="async" fetchpriority="low">`;
     return item;
   });
   items.forEach(item => track.appendChild(item));
   items.forEach(item => track.appendChild(item.cloneNode(true)));
   const duration = Math.max(28, urls.length * 7);
   track.style.setProperty('--visuals-duration', `${duration}s`);
+}
+
+function initVisualsSection() {
+  const track = document.getElementById('visuals-track');
+  const ph = document.getElementById('visuals-placeholder');
+  if (!track || track.dataset.visualsReady) return false;
+  const urls = window.__portfolioVisualsUrls;
+  if (urls?.length) {
+    if (ph) ph.remove();
+    buildVisualsMarquee(track, urls);
+    return true;
+  }
+  return false;
 }
 
 async function scanFolders(bases) {
@@ -456,10 +498,11 @@ function initCarousel({ trackId, dotsId, prevId, nextId, controlsId, autoplay = 
 window.beyondCarousel = null;
 
 (async () => {
+  if (initVisualsSection()) return;
   const track = document.getElementById('visuals-track');
   const ph = document.getElementById('visuals-placeholder');
-  if (!track) return;
-  const urls = await scanFolder('assets/media/visuals', 48);
+  if (!track || track.dataset.visualsReady) return;
+  const urls = await resolveVisualsUrls();
   if (urls.length) {
     if (ph) ph.remove();
     buildVisualsMarquee(track, urls);

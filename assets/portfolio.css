@@ -36,7 +36,8 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);overflow-x:h
   body:has(button:hover) #cursor{ width:20px;height:20px; }
 }
 @media not all and (hover:hover) and (pointer:fine){
-  #cursor,#cursor-ring{display:none}
+  #cursor,#cursor-ring,#cursor-label{display:none!important}
+  .scroll-hint{display:none}
 }
 
 /* ── NAV ── */
@@ -967,6 +968,7 @@ body.nda-modal-open #cursor-ring{
   object-position:center;
 }
 .visuals-placeholder{padding:80px 24px;text-align:center;color:#555;font-size:0.85rem;border:1px dashed #333;border-radius:16px}
+.visuals-marquee-track[data-visuals-ready] .visuals-placeholder{display:none}
 @media (prefers-reduced-motion:reduce){
   .visuals-marquee-track{animation:none}
 }

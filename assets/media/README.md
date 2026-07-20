@@ -3,9 +3,11 @@
 Drop images here (jpg, jpeg, png, webp). The site loads them automatically.
 
 ## visuals/
-Mockups and screens for the **Visual Craft** infinite scroll strip.
+Mockups and screens for the **Selected Frames** infinite scroll strip.
 
-Name files `01.jpg`, `02.png` … or `1.png`, `2.png` … (jpg, jpeg, png, webp).
+- `manifest.json` — list of image paths (preferred; instant load)
+- Optimized WebP files: `1.webp` … `6.webp` (generated from PNG sources)
+- Legacy PNG naming also supported: `01.jpg`, `02.png` … or `1.png`, `2.png` …
 
 ## beyond/
 Images for **Beyond Work** — click a category on the left to load its gallery.

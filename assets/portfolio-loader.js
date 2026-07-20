@@ -7,6 +7,7 @@
     'assets/media/work/adsc-thumbnail.png',
     'assets/media/work/petbuddy-thumbnail.png',
   ];
+  const VISUALS_MANIFEST = 'assets/media/visuals/manifest.json';
   const HOLD_AT_100_MS = 480;
 
   const loader = document.getElementById('page-loader');
@@ -23,10 +24,11 @@
     dom: { weight: 4, done: false, partial: 0 },
     css: { weight: 6, done: false, partial: 0 },
     fonts: { weight: 8, done: false, partial: 0 },
-    framesDownload: { weight: 38, done: false, partial: 0 },
-    framesParse: { weight: 14, done: false, partial: 0 },
+    framesDownload: { weight: 34, done: false, partial: 0 },
+    framesParse: { weight: 12, done: false, partial: 0 },
     heroFrame: { weight: 10, done: false, partial: 0 },
-    thumbs: { weight: 12, done: false, partial: 0 },
+    thumbs: { weight: 8, done: false, partial: 0 },
+    visuals: { weight: 10, done: false, partial: 0 },
     appJs: { weight: 5, done: false, partial: 0 },
     ready: { weight: 3, done: false, partial: 0 },
   };
@@ -199,6 +201,53 @@
     complete('thumbs');
   };
 
+  const loadVisualsManifest = async () => {
+    try {
+      const res = await fetch(VISUALS_MANIFEST, { cache: 'force-cache' });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : (data.images || []);
+    } catch {
+      return [];
+    }
+  };
+
+  const loadVisuals = async () => {
+    const urls = await loadVisualsManifest();
+    if (!urls.length) {
+      complete('visuals');
+      return;
+    }
+    let done = 0;
+    await Promise.all(urls.map(src => waitForImage(src).then(() => {
+      done += 1;
+      setPartial('visuals', done / urls.length);
+    })));
+    window.__portfolioVisualsUrls = urls;
+    mountVisualsMarquee(urls);
+    complete('visuals');
+  };
+
+  const mountVisualsMarquee = urls => {
+    const track = document.getElementById('visuals-track');
+    const ph = document.getElementById('visuals-placeholder');
+    if (!track || !urls?.length || track.dataset.visualsReady) return;
+    track.dataset.visualsReady = '1';
+    if (ph) ph.remove();
+    track.innerHTML = '';
+    const items = urls.map((src, i) => {
+      const item = document.createElement('div');
+      item.className = 'visuals-marquee-item';
+      item.innerHTML = `<img src="${src}" alt="Visual craft frame ${i + 1}" loading="eager" decoding="async">`;
+      return item;
+    });
+    items.forEach(item => track.appendChild(item));
+    items.forEach(item => track.appendChild(item.cloneNode(true)));
+    track.style.setProperty('--visuals-duration', `${Math.max(28, urls.length * 7)}s`);
+  };
+
+  window.__mountVisualsMarquee = mountVisualsMarquee;
+
   const finish = () => {
     if (finished) return;
     finished = true;
@@ -219,6 +268,7 @@
     loader.remove();
     document.body.classList.remove('is-loading');
     if (!window.FRAMES?.length) await loadScript(FRAMES_URL);
+    await loadVisuals();
     if (!window.__portfolioAppLoaded) await loadScript(APP_URL);
     markLoaderDone();
   };
@@ -251,6 +301,8 @@
     complete('heroFrame');
 
     await loadThumbnails();
+
+    await loadVisuals();
 
     await loadScript(APP_URL);
     window.__portfolioAppLoaded = true;
