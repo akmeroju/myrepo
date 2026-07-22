@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Build live ADSC case study from adsc.source.html."""
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
+from portfolio_shell import apply_portfolio_footer, ensure_footer_css
 SRC = ROOT / "case-studies" / "adsc.source.html"
 OUT = ROOT / "case-studies" / "adsc.html"
 DRAFT_SRC = ROOT / "case-studies" / "_drafts" / "adsc-new.source.html"
@@ -53,6 +57,7 @@ BACK_LINK = f"""<a class="case-back case-back-body" href="{HOME}#work">
 HEAD_INJECT = """
 <link rel="stylesheet" href="../assets/case-study-nav.css">
 <link rel="stylesheet" href="../assets/case-study-adsc-shell.css">
+<link rel="stylesheet" href="../assets/case-study-footer.css">
 """
 
 FOOT_INJECT = """
@@ -120,6 +125,9 @@ def build() -> None:
             f"{HERO_OPEN}\n    {BACK_LINK.strip()}\n",
             1,
         )
+
+    text = ensure_footer_css(text, HOME)
+    text = apply_portfolio_footer(text, HOME)
 
     if FOOT_MARKER not in text:
         text = text.replace("</body>", f"{FOOT_INJECT.strip()}\n</body>", 1)

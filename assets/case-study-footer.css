@@ -1,6 +1,7 @@
 /* Homepage footer — shared across portfolio project pages */
 .case-study-page footer.portfolio-site-footer {
   --dark: #0a0a0a;
+  --gold: #c9a84c;
   background: var(--dark);
   margin-top: 0;
   padding: 0;

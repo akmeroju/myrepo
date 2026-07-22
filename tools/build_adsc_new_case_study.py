@@ -1,9 +1,13 @@
 #!/usr/bin/env python3
 """Build local-only preview for new ADSC case study (does not touch live adsc.html)."""
 import re
+import sys
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
+from portfolio_shell import apply_portfolio_footer, ensure_footer_css
 DRAFTS = ROOT / "case-studies" / "_drafts"
 SRC = DRAFTS / "adsc-new.source.html"
 OUT = DRAFTS / "adsc-new.html"
@@ -102,6 +106,9 @@ def build() -> None:
             f"{HERO_OPEN}\n    {BACK_LINK.strip()}\n",
             1,
         )
+
+    text = ensure_footer_css(text, HOME)
+    text = apply_portfolio_footer(text, HOME)
 
     if FOOT_MARKER not in text:
         text = text.replace("</body>", f"{FOOT_INJECT.strip()}\n</body>", 1)
