@@ -4,3 +4,6 @@
 __pycache__/
 *.pyc
 .cursor/
+
+# Local ADSC draft (new case study — not for production)
+case-studies/_drafts/

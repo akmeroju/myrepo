@@ -1,6 +1,11 @@
-/* ADSC case study — portfolio chrome on light paper theme (no global token override) */
+/* ADSC case study — portfolio chrome on v3 light theme */
+
 body.case-study-page.adsc-page {
   cursor: none;
+}
+
+.adsc-page .progress-rail {
+  display: none !important;
 }
 
 .adsc-page #nav {
@@ -70,7 +75,7 @@ body.case-study-page.adsc-page {
   z-index: 501;
 }
 
-.adsc-page #hero {
+.adsc-page #top {
   padding-top: 120px;
 }
 
@@ -78,14 +83,14 @@ body.case-study-page.adsc-page {
   display: inline-flex;
   align-items: center;
   gap: 10px;
-  font-family: 'JetBrains Mono', monospace;
+  font-family: var(--mono);
   font-size: 12px;
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--steel, #5b5f60);
+  color: var(--ink-soft);
   text-decoration: none;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
   transition: color 0.2s, gap 0.2s;
 }
 
@@ -100,7 +105,7 @@ body.case-study-page.adsc-page {
 }
 
 .adsc-page .case-back-body:hover {
-  color: var(--ink, #1b1a17);
+  color: var(--ink);
 }
 
 .adsc-page .case-back-body:hover svg {
@@ -113,11 +118,22 @@ body.case-study-page.adsc-page {
 }
 
 @media (max-width: 900px) {
-  .adsc-page #hero {
-    padding-top: 118px;
+  .adsc-page #top {
+    padding-top: 108px;
   }
 
   .adsc-page .case-back-body span {
-    font-size: 11px;
+    display: none;
+  }
+}
+
+@media not all and (hover: hover) and (pointer: fine) {
+  .adsc-page #cursor,
+  .adsc-page #cursor-ring {
+    display: none !important;
+  }
+
+  body.case-study-page.adsc-page {
+    cursor: auto;
   }
 }

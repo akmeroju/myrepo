@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Build live ADSC case study from adsc.source.html."""
+"""Build local-only preview for new ADSC case study (does not touch live adsc.html)."""
 import re
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parent.parent
-SRC = ROOT / "case-studies" / "adsc.source.html"
-OUT = ROOT / "case-studies" / "adsc.html"
-DRAFT_SRC = ROOT / "case-studies" / "_drafts" / "adsc-new.source.html"
-HOME = "../"
+DRAFTS = ROOT / "case-studies" / "_drafts"
+SRC = DRAFTS / "adsc-new.source.html"
+OUT = DRAFTS / "adsc-new.html"
+HOME = "../../"
 
 NAV_SHELL = f"""
 <div id="progress-bar"></div>
@@ -51,45 +51,27 @@ BACK_LINK = f"""<a class="case-back case-back-body" href="{HOME}#work">
 """
 
 HEAD_INJECT = """
-<link rel="stylesheet" href="../assets/case-study-nav.css">
-<link rel="stylesheet" href="../assets/case-study-adsc-shell.css">
+<link rel="stylesheet" href="../../assets/case-study-nav.css">
+<link rel="stylesheet" href="adsc-new-shell.css">
 """
 
 FOOT_INJECT = """
-<script src="../assets/case-study-nav.js"></script>
+<script src="../../assets/case-study-nav.js"></script>
 """
 
 NAV_MARKER = '<div id="progress-bar"></div>'
 BACK_MARKER = 'class="case-back case-back-body"'
-HEAD_MARKER = 'case-study-adsc-shell.css'
+HEAD_MARKER = 'adsc-new-shell.css'
 FOOT_MARKER = 'case-study-nav.js'
 PROGRESS_RAIL = '<div class="progress-rail"><div class="progress-fill" id="progressFill"></div></div>'
 HERO_OPEN = '<header class="hero" id="top">\n  <div class="wrap">'
 
 
-def sync_source_from_draft() -> None:
-    if not DRAFT_SRC.exists():
-        return
-
-    text = DRAFT_SRC.read_text(encoding="utf-8")
-
-    def prefix_asset(match: re.Match[str]) -> str:
-        path = match.group(1)
-        if path.startswith(("adsc-media/", "data:", "http://", "https://", "../", "/")):
-            return match.group(0)
-        return f'src="adsc-media/{path}"'
-
-    text = re.sub(r'src="([^"]+)"', prefix_asset, text)
-    SRC.write_text(text, encoding="utf-8")
-
-
 def build() -> None:
-    sync_source_from_draft()
-
     if not SRC.exists():
         raise SystemExit(
             f"Source not found: {SRC}\n"
-            "Copy case-studies/_drafts/adsc-new.source.html to case-studies/adsc.source.html"
+            "Copy acko-drive-case-study_3.html to case-studies/_drafts/adsc-new.source.html"
         )
 
     text = SRC.read_text(encoding="utf-8")
@@ -102,15 +84,15 @@ def build() -> None:
 
     text = re.sub(
         r"<body(\s[^>]*)?>",
-        '<body class="case-study-page adsc-page">',
+        '<body class="case-study-page adsc-new-page">',
         text,
         count=1,
     )
 
     if NAV_MARKER not in text:
         text = text.replace(
-            '<body class="case-study-page adsc-page">',
-            f'<body class="case-study-page adsc-page">{NAV_SHELL.strip()}\n',
+            '<body class="case-study-page adsc-new-page">',
+            f'<body class="case-study-page adsc-new-page">{NAV_SHELL.strip()}\n',
             1,
         )
 
@@ -125,7 +107,7 @@ def build() -> None:
         text = text.replace("</body>", f"{FOOT_INJECT.strip()}\n</body>", 1)
 
     OUT.write_text(text, encoding="utf-8")
-    print(f"Built {OUT.relative_to(ROOT)}")
+    print(f"Built {OUT.relative_to(ROOT)} (local draft — not linked from live site)")
 
 
 if __name__ == "__main__":
