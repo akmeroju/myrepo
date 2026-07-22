@@ -333,6 +333,30 @@ document.querySelectorAll('.exp-item').forEach((item, i) => {
 });
 // ── IMAGE FOLDER SCANNER ─────────────────────────────────────────────────
 const VISUALS_MANIFEST_URL = 'assets/media/visuals/manifest.json';
+const RECOGNITION_MANIFEST_URL = 'assets/media/recognition/manifest.json';
+
+async function loadRecognitionManifest() {
+  try {
+    const res = await fetch(RECOGNITION_MANIFEST_URL, { cache: 'force-cache' });
+    if (!res.ok) return [];
+    const data = await res.json();
+    return Array.isArray(data) ? data : (data.images || []);
+  } catch {
+    return [];
+  }
+}
+
+async function resolveRecognitionUrls() {
+  if (window.__portfolioRecognitionUrls?.length) return window.__portfolioRecognitionUrls;
+  const manifest = await loadRecognitionManifest();
+  if (manifest.length) {
+    window.__portfolioRecognitionUrls = manifest;
+    return manifest;
+  }
+  const scanned = await scanFolder('assets/media/recognition');
+  if (scanned.length) window.__portfolioRecognitionUrls = scanned;
+  return scanned;
+}
 
 async function imageExists(url) {
   try {
@@ -515,7 +539,7 @@ window.beyondCarousel = null;
 (async () => {
   const track = document.getElementById('ach-track');
   if (!track) return;
-  let urls = await scanFolder('assets/media/recognition');
+  let urls = await resolveRecognitionUrls();
   if (!urls.length) {
     track.querySelectorAll('img[data-fallback]').forEach(img => { if (img.src) urls.push(img.src); });
     urls = [...new Set(urls)];

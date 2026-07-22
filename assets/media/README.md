@@ -20,6 +20,9 @@ Images for **Beyond Work** — click a category on the left to load its gallery.
 ## recognition/
 Award / hackathon photos for the Recognition section carousel.
 
+- `manifest.json` — list of image paths (preferred; instant load)
+- `01.jpg`, `02.jpg`, … numbered photos
+
 ## work/
 Project card thumbnails for the portfolio **Case Studies** grid.
 

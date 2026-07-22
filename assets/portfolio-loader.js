@@ -8,6 +8,7 @@
     'assets/media/work/petbuddy-thumbnail.png',
   ];
   const VISUALS_MANIFEST = 'assets/media/visuals/manifest.json';
+  const RECOGNITION_MANIFEST = 'assets/media/recognition/manifest.json';
   const HOLD_AT_100_MS = 480;
 
   const loader = document.getElementById('page-loader');
@@ -29,6 +30,7 @@
     heroFrame: { weight: 10, done: false, partial: 0 },
     thumbs: { weight: 8, done: false, partial: 0 },
     visuals: { weight: 10, done: false, partial: 0 },
+    recognition: { weight: 6, done: false, partial: 0 },
     appJs: { weight: 5, done: false, partial: 0 },
     ready: { weight: 3, done: false, partial: 0 },
   };
@@ -201,6 +203,29 @@
     complete('thumbs');
   };
 
+  const loadRecognitionManifest = async () => {
+    try {
+      const res = await fetch(RECOGNITION_MANIFEST, { cache: 'force-cache' });
+      if (!res.ok) return [];
+      const data = await res.json();
+      return Array.isArray(data) ? data : (data.images || []);
+    } catch {
+      return [];
+    }
+  };
+
+  const loadRecognitionImages = async () => {
+    const urls = await loadRecognitionManifest();
+    if (!urls.length) return;
+    let done = 0;
+    await Promise.all(urls.map(src => waitForImage(src).then(() => {
+      done += 1;
+      setPartial('recognition', done / urls.length);
+    })));
+    window.__portfolioRecognitionUrls = urls;
+    complete('recognition');
+  };
+
   const loadVisualsManifest = async () => {
     try {
       const res = await fetch(VISUALS_MANIFEST, { cache: 'force-cache' });
@@ -269,6 +294,7 @@
     document.body.classList.remove('is-loading');
     if (!window.FRAMES?.length) await loadScript(FRAMES_URL);
     await loadVisuals();
+    await loadRecognitionImages();
     if (!window.__portfolioAppLoaded) await loadScript(APP_URL);
     markLoaderDone();
   };
@@ -303,6 +329,7 @@
     await loadThumbnails();
 
     await loadVisuals();
+    await loadRecognitionImages();
 
     await loadScript(APP_URL);
     window.__portfolioAppLoaded = true;
