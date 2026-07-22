@@ -7,7 +7,12 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "tools"))
 
-from portfolio_shell import apply_portfolio_footer, ensure_footer_css
+from portfolio_shell import (
+    apply_portfolio_contact,
+    apply_portfolio_footer,
+    ensure_contact_css,
+    ensure_footer_css,
+)
 SRC = ROOT / "case-studies" / "adsc.source.html"
 OUT = ROOT / "case-studies" / "adsc.html"
 DRAFT_SRC = ROOT / "case-studies" / "_drafts" / "adsc-new.source.html"
@@ -57,6 +62,7 @@ BACK_LINK = f"""<a class="case-back case-back-body" href="{HOME}#work">
 HEAD_INJECT = """
 <link rel="stylesheet" href="../assets/case-study-nav.css">
 <link rel="stylesheet" href="../assets/case-study-adsc-shell.css">
+<link rel="stylesheet" href="../assets/case-study-contact.css">
 <link rel="stylesheet" href="../assets/case-study-footer.css">
 """
 
@@ -126,7 +132,9 @@ def build() -> None:
             1,
         )
 
+    text = ensure_contact_css(text, HOME)
     text = ensure_footer_css(text, HOME)
+    text = apply_portfolio_contact(text)
     text = apply_portfolio_footer(text, HOME)
 
     if FOOT_MARKER not in text:

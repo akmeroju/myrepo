@@ -1,10 +1,14 @@
 #!/usr/bin/env python3
 """Wrap ACKO case study HTML with portfolio nav shell."""
 import re
+import sys
 from pathlib import Path
 from typing import List, Optional, Tuple
 
 ROOT = Path(__file__).resolve().parent.parent
+sys.path.insert(0, str(ROOT / "tools"))
+
+from portfolio_shell import portfolio_contact, portfolio_footer
 SRC = Path("/Users/adithya.meroju/Downloads/acko-enterprise-case-study_8.html")
 OUT = ROOT / "case-studies" / "acko-enterprise.html"
 HOME = "../"
@@ -26,50 +30,9 @@ LANDING_FILE_ALIASES = {
 
 MOBILE_FILE_ALIASES = ["Mobile", "mobile"]
 
-PORTFOLIO_CONTACT = """
-<section id="contact" class="portfolio-contact">
-  <div class="contact-glow"></div>
-  <p class="contact-lbl">Available for opportunities</p>
-  <h2 class="contact-h">Let's <em>Talk.</em></h2>
-  <p class="contact-sub">Open to full-time roles and freelance projects.</p>
-  <div class="contact-actions">
-    <a class="contact-btn" href="mailto:akmeroju@gmail.com">akmeroju@gmail.com</a>
-    <a class="contact-btn-outline" href="https://linkedin.com/in/adithyameroju" target="_blank" rel="noopener noreferrer">LinkedIn &rarr;</a>
-  </div>
-  <div class="contact-info">
-    <div class="cinfo-item">
-      <div class="cinfo-label">Phone</div>
-      <div class="cinfo-val"><a href="tel:+919700562332">+91 97005 62332</a></div>
-    </div>
-    <div class="cinfo-item">
-      <div class="cinfo-label">Email</div>
-      <div class="cinfo-val"><a href="mailto:akmeroju@gmail.com">akmeroju@gmail.com</a></div>
-    </div>
-    <div class="cinfo-item">
-      <div class="cinfo-label">Location</div>
-      <div class="cinfo-val">Bengaluru, India</div>
-    </div>
-  </div>
-</section>
-"""
+PORTFOLIO_CONTACT = portfolio_contact()
 
-PORTFOLIO_FOOTER = """
-<footer class="portfolio-site-footer">
-  <div class="footer-illustration">
-    <div class="footer-hero-wrap">
-      <img src="../assets/media/footer-illustration-v2.png" alt="Designer workspace" class="footer-hero-img" loading="lazy" decoding="async">
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p class="footer-copy">&copy; 2026 Adithya Kumar Meroju &mdash; Product Designer</p>
-    <p class="footer-tagline">Crafted with curiosity, strategy &amp; a lot of Figma.</p>
-    <div class="footer-links">
-      <a href="https://linkedin.com/in/adithyameroju" target="_blank" rel="noopener noreferrer">LinkedIn</a>
-      <a href="mailto:akmeroju@gmail.com">Email</a>
-    </div>
-  </div>
-</footer>
-"""
+PORTFOLIO_FOOTER = portfolio_footer("../")
 
 LIVE_LINKS = [
     ("Homepage", "https://www.acko.com/gi/enterprise/"),
